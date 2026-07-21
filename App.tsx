@@ -1,17 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button , StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
 
-  //data-type
-  //string
-  const[name, setName] = useState<string>("DiAyTi");
+  const[name, setName] = useState<string>("a");
 
   //number
   const[age, setAge] = useState<number>(21);
 
-  //null, undifined, boolean
+  //null, undefined, boolean
   const test = false;
 
   //object, array
@@ -23,9 +21,25 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View>
+        
+        <TextInput 
+        onChangeText={value => setName(value)}
+        value={name}
+        autoCapitalize='none'
+        autoCorrect= {false}
+        // keyboardType='numeric'
+        // maxLength={2} //textarea
+        // multiline
+        style={{
+          borderColor: "violet",
+          borderWidth: 1,
+          padding: 10
+        }}></TextInput>
         <Text style={styles.text}>{name}</Text>
-        <Text style={styles.text}>{JSON.stringify(person)}</Text>
       </View>
+
+      <Button title = 'Add new'/>
+
       <Text style={styles.text}>Hello World 
         <Text style={styles.DiAyti}> DiAyTi</Text>
       </Text>
