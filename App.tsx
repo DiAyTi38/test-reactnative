@@ -15,6 +15,12 @@ export default function App() {
     const todo = {id: randomInteger(1, 1000000), title: text};
     setTodoList([...todoList, todo]);
   }
+
+  const deleteTodo = (id: number) => {
+    const newTodo = todoList.filter(todo => todo.id != id);
+    setTodoList(newTodo);
+  } 
+
   return (
     <View style={styles.container}>
 
@@ -23,6 +29,7 @@ export default function App() {
     />
     <ListTodo
       todoList={todoList}
+      deleteTodo={deleteTodo}
     />
     </View>
   );
