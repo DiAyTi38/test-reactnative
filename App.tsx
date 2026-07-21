@@ -5,40 +5,30 @@ import InputTodo from './components/todo/input.todo';
 import ListTodo from './components/todo/list.todo';
 
 export default function App() {
-  const [todoList, setTodoList] = useState<ITodo[]>([
-    {id: 1, title: "Learn React Native"},
-    {id: 2, title: "Lear React.js"},
-    {id: 3, title: "Watching Netflix"},
-    {id: 4, title: "Playing ESport"},
-    {id: 5, title: "Subscribe Hỏi Dân IT"},
-    {id: 6, title: "Watching Youtube"},
-    {id: 7, title: "CR 7"},
-    {id: 8, title: "Tony Kroos"},
-    {id: 9, title: "Nine"},
-    {id: 10, title: "M10"},
-  ])
+  const [todoList, setTodoList] = useState<ITodo[]>([])
 
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const addTodo = (text: string) => {
+    const todo = {id: randomInteger(1, 1000000), title: text};
+    setTodoList([...todoList, todo]);
+  }
   return (
     <View style={styles.container}>
 
-    <InputTodo/>
+    <InputTodo
+      addTodo={addTodo}
+    />
     <ListTodo
       todoList={todoList}
     />
-
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  DiAyti: {
-    color: 'green',
-  },
-  text: {
-    fontSize: 30,
-    color: 'red',
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
