@@ -1,24 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Button, ScrollView, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import InputTodo from './components/todo/input.todo';
+import ListTodo from './components/todo/list.todo';
 
 export default function App() {
-
-  const[name, setName] = useState<string>("a");
-
-  //number
-  const[age, setAge] = useState<number>(21);
-
-  //null, undefined, boolean
-  const test = false;
-
-  //object, array
-  const[person, setPerson] = useState([{
-    name: "DiAyTi",
-    age: 21
-  }]);
-
-  const [todoList, setTodoList] = useState([
+  const [todoList, setTodoList] = useState<ITodo[]>([
     {id: 1, title: "Learn React Native"},
     {id: 2, title: "Lear React.js"},
     {id: 3, title: "Watching Netflix"},
@@ -33,69 +20,18 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View>
-        
-        <TextInput 
-        onChangeText={value => setName(value)}
-        value={name}
-        autoCapitalize='none'
-        autoCorrect= {false}
-        // keyboardType='numeric'
-        // maxLength={2} //textarea
-        // multiline
-        style={{
-          borderColor: "violet",
-          borderWidth: 1,
-          padding: 10
-        }}></TextInput>
-        <Text style={styles.text}>{name}</Text>
-      </View>
 
-      <Button 
-      title = 'Add new' 
-      onPress={() => alert("tap me")}
-      />
+    <InputTodo/>
+    <ListTodo
+      todoList={todoList}
+    />
 
-      <FlatList
-        style={{
-          marginTop: 20, 
-          borderColor: "red", borderWidth: 1
-        }}
-        data={todoList}
-        keyExtractor={item => item.id + ""}
-        // object destructuring data.item
-        renderItem={({item}) => {
-          return (
-              <Text key = {item.id}
-                style={styles.todo}
-              >
-                {item.title}
-              </Text>
-            )
-      }}
-      />
-      {/* <ScrollView >
-        {todoList.map(todo => {
-          return (
-            <Text key = {todo.id}
-              style={styles.todo}
-            >
-              {todo.title}
-            </Text>
-          )
-        })}
-      </ScrollView> */}
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  todo: {
-    fontSize: 30,
-    backgroundColor: "pink",
-    marginBottom: 20,
-    padding: 15
-  },
   DiAyti: {
     color: 'green',
   },
