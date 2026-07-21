@@ -18,6 +18,19 @@ export default function App() {
     age: 21
   }]);
 
+  const [todoList, setTodoList] = useState([
+    {id: 1, title: "Learn React Native"},
+    {id: 2, title: "Lear React.js"},
+    {id: 3, title: "Watching Netflix"},
+    {id: 4, title: "Playing ESport"},
+    {id: 5, title: "Subscribe Hỏi Dân IT"},
+    {id: 6, title: "Watching Youtube"},
+    {id: 7, title: "CR 7"},
+    {id: 8, title: "Tony Kroos"},
+    {id: 9, title: "Nine"},
+    {id: 10, title: "M10"},
+  ])
+
   return (
     <View style={styles.container}>
       <View>
@@ -38,16 +51,29 @@ export default function App() {
         <Text style={styles.text}>{name}</Text>
       </View>
 
-      <Button title = 'Add new'/>
+      <Button 
+      title = 'Add new' 
+      onPress={() => alert("tap me")}
+      />
 
-      <Text style={styles.text}>Hello World 
-        <Text style={styles.DiAyti}> DiAyTi</Text>
-      </Text>
+      <View style={{marginTop: 20, borderColor: "red", borderWidth: 1}}>
+        {todoList.map(todo => {
+          return (
+            <Text style={styles.todo}>{todo.title}</Text>
+          )
+        })}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  todo: {
+    fontSize: 30,
+    backgroundColor: "pink",
+    marginBottom: 20,
+    padding: 15
+  },
   DiAyti: {
     color: 'green',
   },
@@ -63,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: 'red',
     paddingTop: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    marginTop: 50
   },
 });
