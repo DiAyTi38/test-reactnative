@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Button, Text, View } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
@@ -23,14 +23,17 @@ export default function App() {
 
         <View style = {{ marginVertical: 10}}>
           <Button
-            onPress = {() => navigation.navigate("Details")}
+            onPress = {() => navigation.navigate("Details", 
+              {userId: 1, name: "Eric"})}
             title= 'Go user id = 1'
           />
-          </View>
+        </View>
 
-          <View style = {{ marginVertical: 10}}>
+        <View style = {{ marginVertical: 10}}>
           <Button
-            onPress = {() => navigation.navigate("Details")}
+            onPress = {() => navigation.navigate("Details",
+              {userId: 2, name: "DiAyTi"}
+            )}
             title= 'Go user id = 2'
           />
         </View>
@@ -39,11 +42,13 @@ export default function App() {
   }
 
   function DetailsScreen() {
-    const navigation:any = useNavigation();
+    const route: any = useRoute();
+    const navigation: any = useNavigation();
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
-        <Text>User id = </Text>
+        <Text>User id = {route?.params?.userId}</Text>
         <Button
           onPress = {() => navigation.goBack()}
           title= 'Go back Home'
