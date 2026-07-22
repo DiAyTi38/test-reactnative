@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, ScrollView, FlatList, StyleSheet, Text, TextInput, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import InputTodo from './components/todo/input.todo';
 import ListTodo from './components/todo/list.todo';
+import FlexBox from './components/todo/flexbox';
 
 export default function App() {
   const [todoList, setTodoList] = useState<ITodo[]>([])
@@ -22,6 +23,7 @@ export default function App() {
   } 
 
   return (
+    // <FlexBox/>
     <TouchableWithoutFeedback onPress= {() => Keyboard.dismiss()}>
     <View style={styles.container}>
 
