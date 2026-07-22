@@ -1,54 +1,63 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, ScrollView, FlatList, StyleSheet, Text, TextInput, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import InputTodo from './components/todo/input.todo';
-import ListTodo from './components/todo/list.todo';
-import FlexBox from './components/todo/flexbox';
+import { Button, Text, View } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
-  const [todoList, setTodoList] = useState<ITodo[]>([])
 
-  function randomInteger(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  const Stack = createNativeStackNavigator();
+
+  function HomeScreen(props: any) {
+    const navigation = props.navigation;
+
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+        <View style = {{ marginVertical: 10}}>
+          <Button
+            onPress = {() => navigation.navigate("Details")}
+            title= 'Go to Detail'
+          />
+        </View>
+
+        <View style = {{ marginVertical: 10}}>
+          <Button
+            onPress = {() => navigation.navigate("Details")}
+            title= 'Go user id = 1'
+          />
+          </View>
+
+          <View style = {{ marginVertical: 10}}>
+          <Button
+            onPress = {() => navigation.navigate("Details")}
+            title= 'Go user id = 2'
+          />
+        </View>
+      </View>
+    );
   }
 
-  const addTodo = (text: string) => {
-    const todo = {id: randomInteger(1, 1000000), title: text};
-    setTodoList([...todoList, todo]);
+  function DetailsScreen() {
+    const navigation:any = useNavigation();
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+        <Text>User id = </Text>
+        <Button
+          onPress = {() => navigation.goBack()}
+          title= 'Go back Home'
+        />
+      </View>
+    );
   }
-
-  const deleteTodo = (id: number) => {
-    const newTodo = todoList.filter(todo => todo.id != id);
-    setTodoList(newTodo);
-  } 
 
   return (
-    // <FlexBox/>
-    <TouchableWithoutFeedback onPress= {() => Keyboard.dismiss()}>
-    <View style={styles.container}>
-
-    <InputTodo
-      addTodo={addTodo}
-    />
-    <ListTodo
-      todoList={todoList}
-      deleteTodo={deleteTodo}
-    />
-    </View>
-    </TouchableWithoutFeedback>
+    <NavigationContainer>
+      <Stack.Navigator>
+          <Stack.Screen name = "Home" component={HomeScreen}/>
+          <Stack.Screen name = "Details" component={DetailsScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    fontSize: 60,
-    color: 'red',
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    marginTop: 50
-  },
-});
