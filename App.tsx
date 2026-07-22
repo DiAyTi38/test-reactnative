@@ -7,6 +7,13 @@ import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Home from './components/learn/home';
+import HomeDetail from './components/learn/home.detail';
+import Like from './components/learn/like';
+import LikeDetails from './components/learn/like.detail';
+import LikeDetail from './components/learn/like.detail';
+import About from './components/learn/about';
+import ChangePassword from './components/learn/change.password';
 
 export default function App() {
 
@@ -14,115 +21,50 @@ export default function App() {
   const Drawer = createDrawerNavigator();
   const Tab = createBottomTabNavigator();
 
-  function HomeScreen(props: any) {
-    const navigation = props.navigation;
-
+  const TabApp = () => {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <View style = {{ marginVertical: 10}}>
-          <Button
-            onPress = {() => navigation.navigate("Details")}
-            title= 'Go to Detail'
-          />
-        </View>
-
-        <View style = {{ marginVertical: 10}}>
-          <Button
-            onPress = {() => navigation.navigate("Details", 
-              {userId: 1, name: "Eric"})}
-            title= 'Go user id = 1'
-          />
-        </View>
-
-        <View style = {{ marginVertical: 10}}>
-          <Button
-            onPress = {() => navigation.navigate("Details",
-              {userId: 2, name: "DiAyTi"}
-            )}
-            title= 'Go user id = 2'
-          />
-        </View>
-      </View>
-    );
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Like" component={Like} />
+      </Tab.Navigator>
+    )
   }
 
-  function DetailsScreen() {
-    const route: any = useRoute();
-    const navigation: any = useNavigation();
-
+  const StackApp = () => {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
-        <Text>User id = {route?.params?.userId}</Text>
-        <Button
-          onPress = {() => navigation.goBack()}
-          title= 'Go back Home'
-        />
-      </View>
-    );
+      <Stack.Navigator>
+      <Stack.Screen 
+        name = "Home" 
+        component={TabApp}
+        options={{headerTitle: "Trang chủ", headerShown: false}}
+      />
+      <Stack.Screen 
+        name = "HomeDetail" 
+        component={HomeDetail}
+        options={({route}: {route: any}) => ({
+          headerTitle: `Xem chi tiết ${route?.params?.userId ?? ""}`,})}
+      />
+      <Stack.Screen 
+        name = "LikeDetail" 
+        component={LikeDetail}
+      />
+      </Stack.Navigator>
+    )
   }
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
-        
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-      >
-      <Stack.Screen 
-        name = "Home" 
-        component={HomeScreen}
-        options={{headerTitle: "Trang chủ"}}
-      />
-      <Stack.Screen 
-        name = "Details" 
-        component={DetailsScreen}
-        options={({route}: {route: any}) => ({
-          headerTitle: `Xem chi tiết ${route?.params?.userId ?? ""}`,})}
-      />
-      </Stack.Navigator> */}
-
-      {/* <Drawer.Navigator initialRouteName='Trang chủ'>
+      <Drawer.Navigator>
         <Drawer.Screen 
-          options = {{
-            drawerLabel: "Trang chủ",
-            headerTitle: "Trang chủ"
-          }}
-          name="Feed" component={HomeScreen} />
-        <Drawer.Screen name="Article" component={DetailsScreen} />
-      </Drawer.Navigator> */}
+          name="StackApp" component={StackApp} />
 
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+        <Drawer.Screen 
+          name="About" component={About} />
 
-            if (route.name === 'Home') {
-              iconName = focused
-                ? 'american-football'
-                : 'american-football-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'aperture' : 'aperture-outline';
-            }
+        <Drawer.Screen 
+          name="ChangePassword" component={ChangePassword} />
+      </Drawer.Navigator>
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName as any} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={DetailsScreen} />
-      </Tab.Navigator>
     </NavigationContainer>
   );
 }
