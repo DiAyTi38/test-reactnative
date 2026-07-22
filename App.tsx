@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import 'react-native-gesture-handler';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export default function App() {
 
   const Stack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
 
   function HomeScreen(props: any) {
     const navigation = props.navigation;
@@ -59,7 +62,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      {/* <Stack.Navigator
         
         screenOptions={{
           headerStyle: {
@@ -82,7 +85,17 @@ export default function App() {
         options={({route}: {route: any}) => ({
           headerTitle: `Xem chi tiết ${route?.params?.userId ?? ""}`,})}
       />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+
+      <Drawer.Navigator>
+        <Drawer.Screen 
+          options = {{
+            drawerLabel: "Trang chủ",
+            headerTitle: "Trang chủ"
+          }}
+          name="Feed" component={HomeScreen} />
+        <Drawer.Screen name="Article" component={DetailsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
