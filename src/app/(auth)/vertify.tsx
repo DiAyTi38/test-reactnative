@@ -1,5 +1,5 @@
 import LoadingOverlay from "@/components/loading/overlay";
-import { verifyCodeAPI } from "@/utils/api";
+import { resendCodeAPI, verifyCodeAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -42,7 +42,7 @@ const VertifyPage = () => {
                 backgroundColor: APP_COLOR.ORANGE,
                 opacity: 1,
             });
-            router.navigate("/(auth)/login")
+            router.replace("/(auth)/login")
         } else {
             Toast.show(res.message as string, {
                 duration: Toast.durations.LONG,
@@ -58,6 +58,20 @@ const VertifyPage = () => {
         }
     }, [code])
 
+    const handleResendCode = async() => {
+        otpRef?.current?.clear();
+        //call api
+        const res = await resendCodeAPI(email as string);
+        const m = res.data ? "Resend code thành công" : res.message;
+        if (res.data) {
+            Toast.show(m as string, {
+                duration: Toast.durations.LONG,
+                textColor: "white",
+                backgroundColor: APP_COLOR.ORANGE,
+                opacity: 1,
+            });
+        }
+    }
     return (
         <>
             <View style = {styles.container}>
@@ -84,7 +98,9 @@ const VertifyPage = () => {
             </View>
             <View style={{flexDirection: "row", marginVertical: 10}}>
                 <Text>không nhận được mã xác nhận,</Text>
-                <Text style={{textDecorationLine: 'underline'}}> gửi lại</Text>
+                <Text 
+                    onPress={handleResendCode}
+                    style={{textDecorationLine: 'underline'}}> gửi lại</Text>
             </View>
             </View>
             {isSubmit && <LoadingOverlay/>}    

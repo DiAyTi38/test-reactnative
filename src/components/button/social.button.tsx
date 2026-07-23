@@ -13,7 +13,9 @@ const styles = StyleSheet.create({
 const SocialButton = () => {
     return (
         <View style={styles.welcomeBtn}>
-            <TextBetweenLine title="Đăng nhập với"/>
+            <TextBetweenLine 
+                textColor = "black"
+                title="Đăng nhập với"/>
                 <View style={{
                     flexDirection: "row",
                     justifyContent: "center",
