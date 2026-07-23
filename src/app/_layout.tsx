@@ -2,11 +2,13 @@ import { Slot, Stack } from "expo-router";
 import { Text, View } from "react-native"
 import { APP_COLOR } from "../utils/constant";
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const RootLayout = () => {
     return (
         <RootSiblingParent>
-            <Stack
+            <SafeAreaView style={{flex: 1}}>
+                <Stack
             screenOptions={{
                 headerStyle: {
                     backgroundColor: APP_COLOR.ORANGE,
@@ -28,6 +30,11 @@ const RootLayout = () => {
             />
 
             <Stack.Screen 
+                name="(auth)/vertify"
+                options={{headerShown: false}}
+            />
+
+            <Stack.Screen 
                 name="(tabs)"
                 options={{headerTitle: "Trang chủ"}}
             />
@@ -39,10 +46,14 @@ const RootLayout = () => {
 
             <Stack.Screen 
                 name="(auth)/login"
-                options={{headerTitle: "Đăng nhập"}}
+                options={{
+                    headerTitle: "Đăng nhập",
+                    headerShown: false
+                }}
             />
 
-            </Stack>
+                </Stack>
+            </SafeAreaView>
         </RootSiblingParent>
     )
 }
