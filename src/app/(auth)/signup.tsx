@@ -6,8 +6,8 @@ import ShareInput from "@/components/input/share.input";
 import SocialButton from "@/components/button/social.button";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import axios from "axios";
 import { registerAPI } from "../../utils/api";
+import Toast from "react-native-root-toast";
 
 const styles = StyleSheet.create({
     container: {
@@ -43,7 +43,13 @@ const SignUpPage = () => {
             if (res.data) {
                 router.navigate("/(auth)/vertify");
             } else {
-                alert(res.message)
+                const m = Array.isArray(res.message) ? res.message[0] : res.message; 
+                Toast.show( m, {
+                    duration: Toast.durations.LONG,
+                    textColor: "white",
+                    backgroundColor: APP_COLOR.ORANGE,
+                    opacity: 1,
+                });
             }
         } catch (error) {
             console.log (">>> check error: ", error)

@@ -1,15 +1,12 @@
 import { Slot, Stack } from "expo-router";
 import { Text, View } from "react-native"
 import { APP_COLOR } from "../utils/constant";
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 const RootLayout = () => {
     return (
-        // <View style ={{ padding: 50}}>
-        //     <Text>header</Text>
-        //     <Slot/>
-        //     <Text>footer</Text>
-        // </View>
-        <Stack
+        <RootSiblingParent>
+            <Stack
             screenOptions={{
                 headerStyle: {
                     backgroundColor: APP_COLOR.ORANGE,
@@ -45,7 +42,8 @@ const RootLayout = () => {
                 options={{headerTitle: "Đăng nhập"}}
             />
 
-        </Stack>
+            </Stack>
+        </RootSiblingParent>
     )
 }
 
