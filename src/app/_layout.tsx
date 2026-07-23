@@ -1,5 +1,6 @@
 import { Slot, Stack } from "expo-router";
 import { Text, View } from "react-native"
+import { APP_COLOR } from "./utils/constant";
 
 const RootLayout = () => {
     return (
@@ -11,7 +12,7 @@ const RootLayout = () => {
         <Stack
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: '#f4511e',
+                    backgroundColor: APP_COLOR.ORANGE,
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
