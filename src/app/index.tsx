@@ -1,6 +1,6 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import ShareButton from "@/components/button/share.button";
-import { APP_COLOR } from "./utils/constant";
+import { APP_COLOR } from "../utils/constant";
 import bg from '@/assets/auth/welcome-background.png';
 import fbLogo from '@/assets/auth/facebook.png';
 import ggLogo from '@/assets/auth/google.png';

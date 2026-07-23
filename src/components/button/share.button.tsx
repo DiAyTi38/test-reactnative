@@ -1,6 +1,6 @@
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from "react-native";
 import { ReactNode } from "react";
-import { APP_COLOR } from "@/app/utils/constant";
+import { APP_COLOR } from "@/utils/constant";
 
 const styles = StyleSheet.create({
     btnContainer: {

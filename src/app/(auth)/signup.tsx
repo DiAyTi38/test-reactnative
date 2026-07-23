@@ -1,12 +1,13 @@
 import ShareButton from "@/components/button/share.button";
 import { StyleSheet, Text, View } from "react-native";
-import { APP_COLOR } from "../utils/constant";
+import { APP_COLOR } from "../../utils/constant";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ShareInput from "@/components/input/share.input";
 import SocialButton from "@/components/button/social.button";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
+import { registerAPI } from "../../utils/api";
 
 const styles = StyleSheet.create({
     container: {
@@ -38,7 +39,7 @@ const SignUpPage = () => {
     const handleSignUp = async() => {
         const url = `${process.env.EXPO_PUBLIC_API_URL}/api/v1/auth/register `;
         try {
-            const res = await axios.post(url, {email, password, name});
+            const res = await registerAPI(email, password, name);
             if (res.data) {
                 router.navigate("/(auth)/vertify");
             }

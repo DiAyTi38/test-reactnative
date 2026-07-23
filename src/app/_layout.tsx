@@ -1,6 +1,6 @@
 import { Slot, Stack } from "expo-router";
 import { Text, View } from "react-native"
-import { APP_COLOR } from "./utils/constant";
+import { APP_COLOR } from "../utils/constant";
 
 const RootLayout = () => {
     return (

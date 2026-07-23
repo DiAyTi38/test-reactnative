@@ -1,4 +1,4 @@
-import { APP_COLOR } from "@/app/utils/constant";
+import { APP_COLOR } from "@/utils/constant";
 import { useState } from "react";
 import { KeyboardTypeOptions, StyleSheet, Text, TextInput, View } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
