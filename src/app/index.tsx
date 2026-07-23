@@ -3,7 +3,7 @@ import ShareButton from "@/components/button/share.button";
 import { APP_COLOR } from "./utils/constant";
 import bg from '@/assets/auth/welcome-background.png';
 import fbLogo from '@/assets/auth/facebook.png';
-import ggLogo from '@/assets/auth/google.png'
+import ggLogo from '@/assets/auth/google.png';
 import { LinearGradient } from "expo-linear-gradient";
 import TextBetweenLine from "@/components/button/text.between.line";
 import { Link, Redirect } from "expo-router";
