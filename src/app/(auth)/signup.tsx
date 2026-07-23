@@ -41,7 +41,10 @@ const SignUpPage = () => {
         try {
             const res = await registerAPI(email, password, name);
             if (res.data) {
-                router.navigate("/(auth)/vertify");
+                router.navigate({
+                    pathname: "/(auth)/vertify",
+                    params: {email: email}
+                })
             } else {
                 const m = Array.isArray(res.message) ? res.message[0] : res.message; 
                 Toast.show( m, {

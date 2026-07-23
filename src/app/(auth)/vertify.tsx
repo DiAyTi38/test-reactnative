@@ -1,6 +1,11 @@
+import LoadingOverlay from "@/components/loading/overlay";
+import { verifyCodeAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
-import { StyleSheet, Text, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
+import Toast from "react-native-root-toast";
 
 const styles = StyleSheet.create({
     container: {
@@ -15,13 +20,55 @@ const styles = StyleSheet.create({
 })
 
 const VertifyPage = () => {
+    const [isSubmit, setIsSubmit] = useState<boolean>(false);
+    const otpRef = useRef<OTPTextView>(null);
+    const [code, setCode] = useState<string>("");
+
+    const {email} = useLocalSearchParams();
+
+    const verifyCode = async() => {
+        //call api
+        Keyboard.dismiss();
+        setIsSubmit(true);
+        const res = await verifyCodeAPI(email as string, code);
+        setIsSubmit(false);
+        
+        if (res.data) {
+            //success
+            otpRef?.current?.clear()
+            Toast.show("Kích hoạt tài khoản thành công", {
+                duration: Toast.durations.LONG,
+                textColor: "white",
+                backgroundColor: APP_COLOR.ORANGE,
+                opacity: 1,
+            });
+            router.navigate("/(auth)/login")
+        } else {
+            Toast.show(res.message as string, {
+                duration: Toast.durations.LONG,
+                textColor: "white",
+                backgroundColor: APP_COLOR.ORANGE,
+                opacity: 1,
+            });
+        }
+    }
+    useEffect(() => {
+        if (code && code.length === 6) {
+            verifyCode()
+        }
+    }, [code])
+
     return (
-        <View style = {styles.container}>
+        <>
+            <View style = {styles.container}>
             <Text style={styles.heading}> Xác thực tài khoản</Text>
             <Text style={{marginVertical: 10}}>Vui lòng nhập mã xác nhận đã được gửi tới
                 địa chỉ trandat38052005@gmail.com</Text>
             <View style={{marginVertical: 20}}>
                 <OTPTextView
+                    ref={otpRef}
+                    handleTextChange={setCode}
+                    autoFocus
                     inputCount={6}
                     inputCellLength={1}
                     tintColor={APP_COLOR.ORANGE}
@@ -39,7 +86,9 @@ const VertifyPage = () => {
                 <Text>không nhận được mã xác nhận,</Text>
                 <Text style={{textDecorationLine: 'underline'}}> gửi lại</Text>
             </View>
-        </View>
+            </View>
+            {isSubmit && <LoadingOverlay/>}    
+        </>
     )
 }
 
