@@ -42,8 +42,9 @@ const SignUpPage = () => {
             const res = await registerAPI(email, password, name);
             if (res.data) {
                 router.navigate("/(auth)/vertify");
+            } else {
+                alert(res.message)
             }
-            console.log (">>> check res: ", res.data)
         } catch (error) {
             console.log (">>> check error: ", error)
         }
