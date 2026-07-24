@@ -4,23 +4,38 @@ import HeaderHome from "@/components/home/header.home";
 import SearchHome from "@/components/home/search.home";
 import TopListHome from "@/components/home/toplist.home";
 import { StyleSheet, Text, View } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const data = [
-    { key: 1, name: "Top Quán Rating 5* tuần này", ref: "" },
-    { key: 2, name: "Quán Mới Lên Sàn", ref: "" },
-    { key: 3, name: "Ăn Thỏa Thích, Freeship 0Đ", ref: "" },
+    { key: 1, 
+      name: "Top Quán Rating 5* tuần này", 
+      description: "Gợi ý quán được tín đồ ẩm thực đánh giá 5*",
+      ref: "",
+    },
+    { key: 2, 
+      name: "Quán Mới Lên Sàn", 
+      description: "Khám phá ngay hàng loạt quán mới cực ngon",
+      ref: "" 
+    },
+    { key: 3, 
+      name: "Ăn Thỏa Thích, Freeship 0Đ", 
+      description: "Bánh ngọt, chân gà, bánh tráng trộn...Freeship.",
+      ref: "" 
+    },
 ]
 
 const HomeTab = () => {
   return (
-    <CustomFlatList
-      data={data}
-      style={styles.list}
-      renderItem={({item}) => <CollectionHome name={item.name}/> }
-      HeaderComponent={<HeaderHome/>}
-      StickyElementComponent={<SearchHome/>}
-      TopListElementComponent={<TopListHome />}
-    />
+    <SafeAreaView style={{flex: 1}}>
+      <CustomFlatList
+        data={data}
+        style={styles.list}
+        renderItem={({item}) => <CollectionHome name={item.name} description = {item.description}/> }
+        HeaderComponent={<HeaderHome/>}
+        StickyElementComponent={<SearchHome/>}
+        TopListElementComponent={<TopListHome />}
+      />
+    </SafeAreaView>
   );
 }
 
