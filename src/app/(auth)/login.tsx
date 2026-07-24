@@ -21,14 +21,15 @@ const styles = StyleSheet.create({
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+   
     const handleLogIn = async() => {
 
         // const url = `${process.env.EXPO_PUBLIC_API_URL}/api/v1/auth/login `;
         try {
+            setLoading(true);
             const res = await loginAPI(email, password);
-            
+            setLoading(false);
             if (res.data) {
                 router.replace({
                     pathname: "/(tabs)",
@@ -78,19 +79,20 @@ const Login = () => {
 
                 <View style={{marginVertical: 10}}/>
                 <ShareButton
+                    loading={loading}
                     title= "Đăng nhập"
-                            onPress= {handleLogIn}
-                            textStyle = {{ 
-                                textTransform: "uppercase",
-                                color : "#fff", 
-                                paddingVertical: 5}}
-                            btnStyle = {{
-                                justifyContent: "center",
-                                borderRadius: 30,
-                                paddingHorizontal: 50,
-                                paddingVertical: 10,
-                                backgroundColor: APP_COLOR.ORANGE,
-                            }}
+                    onPress= {handleLogIn}
+                    textStyle = {{ 
+                        textTransform: "uppercase",
+                        color : "#fff", 
+                        paddingVertical: 5}}
+                    btnStyle = {{
+                        justifyContent: "center",
+                        borderRadius: 30,
+                        paddingHorizontal: 50,
+                        paddingVertical: 10,
+                        backgroundColor: APP_COLOR.ORANGE,
+                    }}
                     pressStyle = {{alignSelf: "stretch"}}
                 />
 
