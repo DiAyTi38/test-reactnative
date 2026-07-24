@@ -35,6 +35,8 @@ const TabLayout = () => {
             return (
                 <MaterialCommunityIcons name="account" size={24} color = {focused ? APP_COLOR.ORANGE: APP_COLOR.GREY} />)
         }
+
+        return (<></>)     
     }
     
     return (

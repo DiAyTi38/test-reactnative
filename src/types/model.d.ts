@@ -11,4 +11,18 @@ declare global {
     interface IRegister {
         _id: string;
     }
+
+    interface IUserLogin {
+        user : {
+            email: string,
+            _id: string,
+            name: string,
+            role: string,
+            address: any,
+            avatar: string,
+            phone: string;
+        };
+
+        access_token: string;
+    }
  }

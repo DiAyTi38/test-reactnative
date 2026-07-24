@@ -1,6 +1,7 @@
 import ShareButton from "@/components/button/share.button";
 import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
+import { useCurrentApp } from "@/context/app.context";
 import { loginAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { LoginSchema } from "@/utils/validate.schema";
@@ -21,17 +22,18 @@ const styles = StyleSheet.create({
 
 })
 
-const Login = () => {
+const LoginPage = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const {setAppState} = useCurrentApp();
    
     const handleLogIn = async(email: string, password: string) => {
 
-        // const url = `${process.env.EXPO_PUBLIC_API_URL}/api/v1/auth/login `;
         try {
             setLoading(true);
             const res = await loginAPI(email, password);
             setLoading(false);
             if (res.data) {
+                setAppState(res.data);
                 router.replace({
                     pathname: "/(tabs)",
                 })
@@ -136,4 +138,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default LoginPage;

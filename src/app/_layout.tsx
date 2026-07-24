@@ -4,6 +4,9 @@ import { APP_COLOR } from "../utils/constant";
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import AppProvider from "@/context/app.context";
+
 
 const RootLayout = () => {
     const navTheme = {
@@ -13,8 +16,10 @@ const RootLayout = () => {
         },
     }
     return (
-        <RootSiblingParent>
-            <SafeAreaView style={{flex: 1}}>
+        <GestureHandlerRootView>
+            <RootSiblingParent>
+                <AppProvider>
+                    <SafeAreaView style={{flex: 1}}>
                 <ThemeProvider value={navTheme}>
                     <Stack
             screenOptions={{
@@ -62,8 +67,10 @@ const RootLayout = () => {
 
                     </Stack>
                 </ThemeProvider>
-            </SafeAreaView>
-        </RootSiblingParent>
+                    </SafeAreaView>
+                </AppProvider>
+            </RootSiblingParent>
+        </GestureHandlerRootView>
     )
 }
 
