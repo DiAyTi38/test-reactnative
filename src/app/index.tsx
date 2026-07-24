@@ -1,4 +1,4 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Button, Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import ShareButton from "@/components/button/share.button";
 import { APP_COLOR } from "../utils/constant";
 import bg from '@/assets/auth/welcome-background.png';
@@ -7,8 +7,11 @@ import ggLogo from '@/assets/auth/google.png';
 import { LinearGradient } from "expo-linear-gradient";
 import TextBetweenLine from "@/components/button/text.between.line";
 import { Link, Redirect, router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-root-toast";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAccountAPI, printAsyncStorage } from "@/utils/api";
+import { useCurrentApp } from "@/context/app.context";
 
 const styles = StyleSheet.create({
     container: {
@@ -40,6 +43,23 @@ const styles = StyleSheet.create({
 })
 
 const WelcomePage = () => {
+
+    const {setAppState} = useCurrentApp();
+    useEffect(() => {
+        const fetchAccount = async() => {
+            const res = await getAccountAPI();
+            if (res.data) {
+                // success
+                setAppState({
+                    user: res.data.user,
+                })
+                router.replace("/(tabs)")
+            } else {
+                // errors
+            }
+        }
+        fetchAccount()
+    }, []) 
 
     // if (true) {
     //     return (
