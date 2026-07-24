@@ -62,28 +62,6 @@ const Login = () => {
                 onSubmit={values => handleLogIn(values.email, values.password)}
             >
                 {({ handleChange, handleBlur, handleSubmit, values, errors}) => (
-                    // <View style={{ margin: 10 }}>
-                    //     <Text>Email </Text>
-                    //     <TextInput
-                    //         style={{ borderWidth: 1, borderColor: "#ccc" }}
-                    //         onChangeText={handleChange('email')}
-                    //         onBlur={handleBlur('email')}
-                    //         value={values.email}
-                    //     />
-                    //     {errors.email && <Text style={{color: "red"}}>{errors.email}</Text>}
-                    //     <View style={{ marginVertical: 10 }}></View>
-                    //     <Text>Password</Text>
-                    //     <TextInput
-                    //         style={{ borderWidth: 1, borderColor: "#ccc" }}
-                    //         onChangeText={handleChange('password')}
-                    //         onBlur={handleBlur('password')}
-                    //         value={values.password}
-                    //     />
-                    //     {errors.password && <Text style={{color: "red"}}>{errors.password}</Text>}
-                    //     <View style={{ marginVertical: 10 }}></View>
-                
-                    //     <Button onPress={handleSubmit as any} title="Submit" />
-                    // </View>
                     <View style = {styles.container}>
                 <View>
                     <Text style ={{
