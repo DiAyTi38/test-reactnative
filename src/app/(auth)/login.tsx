@@ -3,9 +3,12 @@ import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
 import { loginAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
+import { LoginSchema } from "@/utils/validate.schema";
 import { Link, router } from "expo-router";
+import { Formik } from "formik";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native"
+import { Button, StyleSheet, Text, TextInput, View } from "react-native"
+import { red } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,11 +22,9 @@ const styles = StyleSheet.create({
 })
 
 const Login = () => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
    
-    const handleLogIn = async() => {
+    const handleLogIn = async(email: string, password: string) => {
 
         // const url = `${process.env.EXPO_PUBLIC_API_URL}/api/v1/auth/login `;
         try {
@@ -55,7 +56,35 @@ const Login = () => {
     }
     return (
         <SafeAreaView style={{flex: 1}}>
-            <View style = {styles.container}>
+            <Formik
+                validationSchema={LoginSchema}
+                initialValues={{ email: '', password: '' }}
+                onSubmit={values => handleLogIn(values.email, values.password)}
+            >
+                {({ handleChange, handleBlur, handleSubmit, values, errors}) => (
+                    // <View style={{ margin: 10 }}>
+                    //     <Text>Email </Text>
+                    //     <TextInput
+                    //         style={{ borderWidth: 1, borderColor: "#ccc" }}
+                    //         onChangeText={handleChange('email')}
+                    //         onBlur={handleBlur('email')}
+                    //         value={values.email}
+                    //     />
+                    //     {errors.email && <Text style={{color: "red"}}>{errors.email}</Text>}
+                    //     <View style={{ marginVertical: 10 }}></View>
+                    //     <Text>Password</Text>
+                    //     <TextInput
+                    //         style={{ borderWidth: 1, borderColor: "#ccc" }}
+                    //         onChangeText={handleChange('password')}
+                    //         onBlur={handleBlur('password')}
+                    //         value={values.password}
+                    //     />
+                    //     {errors.password && <Text style={{color: "red"}}>{errors.password}</Text>}
+                    //     <View style={{ marginVertical: 10 }}></View>
+                
+                    //     <Button onPress={handleSubmit as any} title="Submit" />
+                    // </View>
+                    <View style = {styles.container}>
                 <View>
                     <Text style ={{
                         fontSize: 25,
@@ -66,22 +95,27 @@ const Login = () => {
 
                 <ShareInput
                     title = "Email"
-                    value = {email}
-                    setValue={setEmail}
+                    keyboardType="email-address"
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    errors={errors.email}
                 />
 
                 <ShareInput
                     title= "Password"
-                    value = {password}
-                    setValue = {setPassword}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
                     secureTextEntry = {true}
+                    errors = {errors.password}
                 />
 
                 <View style={{marginVertical: 10}}/>
                 <ShareButton
                     loading={loading}
                     title= "Đăng nhập"
-                    onPress= {handleLogIn}
+                    onPress= {handleSubmit as any}
                     textStyle = {{ 
                         textTransform: "uppercase",
                         color : "#fff", 
@@ -117,6 +151,9 @@ const Login = () => {
                     title = "Đăng nhập với"
                 />
             </View>
+                )}
+            </Formik>
+
         </SafeAreaView>
     )
 }
