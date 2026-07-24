@@ -3,12 +3,20 @@ import { Text, View } from "react-native"
 import { APP_COLOR } from "../utils/constant";
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 
 const RootLayout = () => {
+    const navTheme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,background: 'transparent',
+        },
+    }
     return (
         <RootSiblingParent>
             <SafeAreaView style={{flex: 1}}>
-                <Stack
+                <ThemeProvider value={navTheme}>
+                    <Stack
             screenOptions={{
                 headerStyle: {
                     backgroundColor: APP_COLOR.ORANGE,
@@ -52,7 +60,8 @@ const RootLayout = () => {
                 }}
             />
 
-                </Stack>
+                    </Stack>
+                </ThemeProvider>
             </SafeAreaView>
         </RootSiblingParent>
     )
