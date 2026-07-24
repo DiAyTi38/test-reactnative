@@ -10,12 +10,17 @@ const styles = StyleSheet.create({
         gap: 30,
     },
 })
-const SocialButton = () => {
+
+interface IProps {
+    title: string
+}
+const SocialButton = (props: IProps) => {
+    const {title} = props;
     return (
         <View style={styles.welcomeBtn}>
             <TextBetweenLine 
                 textColor = "black"
-                title="Đăng nhập với"/>
+                title={title}/>
                 <View style={{
                     flexDirection: "row",
                     justifyContent: "center",
