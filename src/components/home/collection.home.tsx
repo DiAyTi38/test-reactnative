@@ -1,9 +1,10 @@
-import { FlatList, Image, Platform, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import demo from "@/assets/demo.jpg";
 import { APP_COLOR } from "@/utils/constant";
 import { useEffect, useState } from "react";
 import { getTopRestaurant } from "@/utils/api";
 import { ref } from "yup";
+import { router } from "expo-router";
 
 interface IProps {
     name: string;
@@ -79,6 +80,7 @@ const CollectionHome = (props: IProps) => {
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item}) => {
                         return (
+                            <Pressable onPress={() => router.navigate("/product")}>
                             <View style={{backgroundColor: "#efefef"}}>
                                 <Image
                                     style={{height: 130, width: 130}}
@@ -95,6 +97,7 @@ const CollectionHome = (props: IProps) => {
                                     </View>
                                 </View>
                             </View>
+                            </Pressable>
                         )
                     }}
                 />
