@@ -26,6 +26,11 @@ export const resendCodeAPI = (email: string) => {
     return axios.post<IBackendRes<IRegister>>(url, {email});
 }
 
+export const getTopRestaurant = (ref: string) => {
+    const url = `/api/v1/restaurants/${ref}`;
+    return axios.post<IBackendRes<ITopRestaurant[]>>(url);
+}
+
 export const printAsyncStorage = () => {
     AsyncStorage.getAllKeys((err, keys) => {
         AsyncStorage.multiGet(keys!, (error, stores) => {
