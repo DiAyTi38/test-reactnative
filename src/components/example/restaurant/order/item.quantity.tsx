@@ -1,15 +1,53 @@
 import { currencyFormatter, getURLBaseBackend } from '@/utils/api';
 import { APP_COLOR } from '@/utils/constant';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
+import { useCurrentApp } from '@/context/app.context';
 
 interface IProps {
     menuItem: IMenuItem;
+    restaurant: IRestaurant | null;
 }
 
 const ItemQuantity = (props: IProps) => {
-    const {menuItem} = props;
+    const {menuItem, restaurant} = props;
+    const {cart, setCart} = useCurrentApp();
+    const handlePressItem =(item: IMenuItem, action: "MINUS" | "PLUS") => {
+        if (restaurant?._id) {
+            const total = action === "MINUS" ? -1 : 1;
+            if (!cart[restaurant?._id]) {
+                // chưa tồn tại cửa hàng => Khởi tạo cửa hàng
+                cart[restaurant?._id] = {
+                    sum: 0,
+                    quantity: 0,
+                    items: {}
+                }
+                cart[restaurant?._id].sum = 0;
+                cart[restaurant?._id].quantity = 0;
+                cart[restaurant?._id].items = {};
+            }
+            
+
+            // xử lý sản phẩm
+            cart[restaurant._id].sum = cart[restaurant._id].sum + total * item.basePrice;
+            cart[restaurant._id].quantity = cart[restaurant._id].quantity + total;
+
+            // check sản phẩm đã từng thêm vào chưa
+            if (!cart[restaurant?._id].items[item._id]) {
+                cart[restaurant?._id].items[item._id] = {
+                    data: menuItem,
+                    quantity: 0
+                };
+            }
+
+            cart[restaurant?._id].items[item._id] = {
+                data: menuItem,
+                quantity: cart[restaurant._id].items[item._id].quantity + total
+            };
+        }
+        console.log(cart);
+    }
     
     return (
         <View style={{
@@ -30,9 +68,25 @@ const ItemQuantity = (props: IProps) => {
                         {currencyFormatter(menuItem.basePrice)}
                     </Text>
                     <View style={{alignItems: "center",flexDirection: "row", gap: 3}}>
-                        <Feather name="minus-square" size={24} color= {APP_COLOR.ORANGE} />
+                        <Pressable 
+                            style={({pressed }) => ({
+                            opacity: pressed === true ? 0.5 : 1,
+                            alignSelf: "flex-start",
+                            })}
+                                onPress={() => {handlePressItem(menuItem, "MINUS")}}
+                            >
+                            <Feather name="minus-square" size={24} color= {APP_COLOR.ORANGE} />
+                        </Pressable>
                         <Text style={{minWidth: 25, textAlign: "center"}}>10</Text>
+                        <Pressable 
+                            style={({pressed }) => ({
+                            opacity: pressed === true ? 0.5 : 1,
+                            alignSelf: "flex-start",
+                            })}
+                                onPress={() => {handlePressItem(menuItem, "PLUS")}}
+                            >
                         <Entypo name="squared-plus" size={24} color= {APP_COLOR.ORANGE}/>
+                        </Pressable>
                     </View>
                 </View>
             </View>

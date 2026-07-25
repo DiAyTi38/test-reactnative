@@ -79,6 +79,20 @@ declare global {
         updatedAt: Date;
     }
 
+        interface ICart {
+        [key: string]: {
+            sum: number;
+            quantity: number;
+            items: {
+                [key: string]: {
+                    quantity: number;
+                    data: IMenuItem
+                }
+            }
+        }
+    }
+
+
  }
 
   
