@@ -237,7 +237,7 @@ const RMain = (props: IProps) => {
                 onViewableItemsChanged={onViewableItemsChanged}
                 onMomentumScrollEnd={() => (blockUpdateRef.current = false)}
             />
-            <StickyFooter/>
+            <StickyFooter restaurant={restaurant}/>
         </View>
     );
 };

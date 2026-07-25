@@ -2,10 +2,25 @@ import { APP_COLOR } from "@/utils/constant";
 import { Pressable, Text, View } from "react-native";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { currencyFormatter } from "@/utils/api";
+import { useCurrentApp } from "@/context/app.context";
 
-const StickyFooter = () => {
+interface IProps {
+    restaurant: IRestaurant | null;
+}
+const StickyFooter = (props: IProps) => {
+    const {cart, setCart} = useCurrentApp();
+    const {restaurant} = props;
+
+    const getSum = () => {
+        if (restaurant && cart[restaurant._id]) {
+            return cart[restaurant._id].sum;
+        }
+        return 0;
+    }
     return (
-        <View style = {{
+        <>
+        {getSum() === 0 ? <></> :
+            <View style = {{
             width: "100%",
             backgroundColor: "white",
             zIndex: 11,
@@ -34,7 +49,12 @@ const StickyFooter = () => {
                         backgroundColor: APP_COLOR.ORANGE
                     }}>
                         <Text style={{color: "white", fontSize: 9,}}>
-                            10
+                            {restaurant && cart && cart[restaurant?._id] && 
+                            cart[restaurant?._id]["quantity"] && 
+                                <Text>
+                                    {cart[restaurant?._id]["quantity"]}
+                                </Text>
+                            }
                         </Text>
                     </View>
                     <Pressable onPress={() => alert("cart")}>
@@ -42,7 +62,7 @@ const StickyFooter = () => {
                     </Pressable>
                 </View>
                 <View style={{paddingRight: 10}}>
-                    <Text style={{color: APP_COLOR.ORANGE, fontSize: 18}}> {currencyFormatter(125000)}</Text>
+                    <Text style={{color: APP_COLOR.ORANGE, fontSize: 18}}> {currencyFormatter(getSum())}</Text>
                 </View>
             </View>
 
@@ -58,7 +78,9 @@ const StickyFooter = () => {
                    Giao hàng 
                 </Text>
             </View>
-        </View>
+            </View>
+        }
+        </>
     )
 }
 
