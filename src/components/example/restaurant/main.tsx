@@ -5,8 +5,8 @@ import { APP_COLOR } from '@/utils/constant';
 import StickyHeader from './sticky.header';
 import { useRef, useState } from 'react';
 import { currencyFormatter, getURLBaseBackend, processDataRestaurantMenu } from '@/utils/api';
-import Entypo from '@expo/vector-icons/Entypo';
-
+import ItemQuantity from './order/item.quantity';
+import StickyFooter from './order/sticky.footer';
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
@@ -209,34 +209,12 @@ const RMain = (props: IProps) => {
                 stickySectionHeadersEnabled={false}
                 contentContainerStyle={{
                     paddingTop: IMAGE_HEIGHT + INFO_HEIGHT + SLIDE_MENU_HEIGHT - 2,
-                    paddingBottom: 30,
+                    paddingBottom: 50,
                 }}
                 sections={processDataRestaurantMenu(restaurant)}
                 renderItem={({ item, index }: { item: any, index: any }) => {
                     const menuItem = item as IMenuItem;
-                    return (
-                        <View style={{
-                            backgroundColor: "white",
-                            gap: 10, flexDirection: "row", padding: 10
-                        }}>
-                            <View>
-                                <Image
-                                    style={{height: 100, width: 100}}
-                                    source={{uri: `${getURLBaseBackend()}/images/menu-item/${menuItem?.image}`}}
-                                />
-                            </View>
-                            <View style={{ flex: 1, gap: 10}}>
-                                <View><Text>{menuItem.title}</Text></View>
-                                <View><Text>{menuItem.description}</Text></View>
-                                <View style={{justifyContent: 'space-between', flexDirection: "row"}}>
-                                    <Text style={{color: APP_COLOR.ORANGE}}>
-                                        {currencyFormatter(menuItem.basePrice)}
-                                    </Text>
-                                    <Entypo name="squared-plus" size={24} color= {APP_COLOR.ORANGE}/>
-                                </View>
-                            </View>
-                        </View>
-                    )
+                    return (<ItemQuantity menuItem={menuItem}/>)
                 }}
                 renderSectionHeader={({ section }: { section: any }) => (
 
@@ -257,6 +235,7 @@ const RMain = (props: IProps) => {
                 onViewableItemsChanged={onViewableItemsChanged}
                 onMomentumScrollEnd={() => (blockUpdateRef.current = false)}
             />
+            <StickyFooter/>
         </View>
     );
 };

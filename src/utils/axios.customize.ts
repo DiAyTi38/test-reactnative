@@ -8,7 +8,7 @@ const backend = Platform.OS === "android"
 
 const instance = axios.create({
     baseURL: backend,
-    timeout: 5 * 1000 // 5s
+    timeout: 60 * 1000 // 60s
 });
 
 // Add a request interceptor
