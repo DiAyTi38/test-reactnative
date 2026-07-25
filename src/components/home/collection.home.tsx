@@ -1,11 +1,13 @@
-import { FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import demo from "@/assets/demo.jpg";
 import { APP_COLOR } from "@/utils/constant";
 import { useEffect, useState } from "react";
 import { getTopRestaurant } from "@/utils/api";
 import { ref } from "yup";
 import { router } from "expo-router";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
+const { height: sHeight, width: sWidth } = Dimensions.get('window');
 interface IProps {
     name: string;
     description: string;
@@ -35,15 +37,18 @@ const CollectionHome = (props: IProps) => {
         {key: 5, image: demo, name: "cua hang 5"},
     ]
     const [restaurants, setRestaurants] = useState<ITopRestaurant[]> ([])
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async() => {
+            setLoading(true)
             const res = await getTopRestaurant(refAPI);
             if (res.data) {
                 setRestaurants(res.data)
             } else {
                 //errors
             }
+            setLoading(false)
         }
         fetchData();
     }, [refAPI]) 
@@ -57,6 +62,7 @@ const CollectionHome = (props: IProps) => {
     return (
         <>
             <View style={{ height: 10, backgroundColor: "#e9e9e9"}}></View>
+            {loading === false ?
             <View style={styles.container}>
                 <View style={{justifyContent: "space-between", flexDirection: "row"}}>
                     <Text
@@ -105,6 +111,21 @@ const CollectionHome = (props: IProps) => {
                     }}
                 />
             </View>
+            :
+            <ContentLoader
+                speed={2}
+                width={sWidth}
+                height={230}
+                // viewBox="0 0 700 150"
+                backgroundColor="#f3f3f3"
+                foregroundColor="#ecebeb"
+                style={{ width: '100%' }}
+            >
+                <Rect x="10" y="10" rx="5" ry="5" width={150} height="200" />
+                <Rect x="170" y="10" rx="5" ry="5" width={150} height="200" />
+                <Rect x="330" y="10" rx="5" ry="5" width={150} height="200" />
+            </ContentLoader>
+            }
         </>
     )
 }

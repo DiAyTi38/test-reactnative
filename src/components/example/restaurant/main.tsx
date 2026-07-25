@@ -4,7 +4,7 @@ import Info from './info';
 import { APP_COLOR } from '@/utils/constant';
 import StickyHeader from './sticky.header';
 import { useRef, useState } from 'react';
-import { getURLBaseBackend, processDataRestaurantMenu } from '@/utils/api';
+import { currencyFormatter, getURLBaseBackend, processDataRestaurantMenu } from '@/utils/api';
 import Entypo from '@expo/vector-icons/Entypo';
 
 
@@ -229,7 +229,9 @@ const RMain = (props: IProps) => {
                                 <View><Text>{menuItem.title}</Text></View>
                                 <View><Text>{menuItem.description}</Text></View>
                                 <View style={{justifyContent: 'space-between', flexDirection: "row"}}>
-                                    <Text>{menuItem.basePrice}</Text>
+                                    <Text style={{color: APP_COLOR.ORANGE}}>
+                                        {currencyFormatter(menuItem.basePrice)}
+                                    </Text>
                                     <Entypo name="squared-plus" size={24} color= {APP_COLOR.ORANGE}/>
                                 </View>
                             </View>
