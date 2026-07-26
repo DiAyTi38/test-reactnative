@@ -1,51 +1,185 @@
-import ShareInput from "@/components/input/share.input";
 import { useCurrentApp } from "@/context/app.context";
-import { Image, Platform, StyleSheet, Text, View } from "react-native";
-
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 15,
-        paddingTop: 50,
-    },
-})
+import { getURLBaseBackend } from "@/utils/api";
+import { APP_COLOR } from "@/utils/constant";
+import {
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
 
 const AccountPage = () => {
-    const {theme, appState} = useCurrentApp();
-
-    const backend = Platform.OS === "android" 
-        ? process.env.EXPO_PUBLIC_ANDROID_API_URL 
-        : process.env.EXPO_PUBLIC_IOS_API_URL;
-
-    const baseImage = `${backend}/images/avatar`;
-    return (
-        <View style = {styles.container}>
-            <View style={{ alignItems: "center", gap: 5}}>
-                <Image
-                    style={{height: 150, width: 150}}
-                    source = {{uri: `${baseImage}/${appState?.user.avatar}`}}
-                />
-                <Text>{appState?.user.name}</Text>
-            </View>
-
-            <View style={{marginTop: 20, gap: 20}}>
-                <ShareInput
-                    title="Họ tên"
-                    value={appState?.user.name}
-                />
-
-                <ShareInput
-                    title="Email"
-                    keyboardType="email-address"
-                    value={appState?.user.email}
-                />
-
-                <ShareInput
-                    title="Số điện thoại"
-                    value={appState?.user.phone}
-                />
-            </View>
+  const insets = useSafeAreaInsets();
+  const { appState } = useCurrentApp();
+  const baseImage = `${getURLBaseBackend()}/images/avatar`;
+  return (
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          gap: 20,
+          flexDirection: "row",
+          paddingTop: insets.top,
+          paddingHorizontal: 20,
+          paddingBottom: 20,
+          backgroundColor: APP_COLOR.ORANGE,
+          alignItems: "center",
+        }}
+      >
+        <Image
+          style={{ height: 60, width: 60 }}
+          source={{ uri: `${baseImage}/${appState?.user.avatar}` }}
+        />
+        <View>
+          <Text style={{ color: "white", fontSize: 20 }}>
+            {appState?.user.name}
+          </Text>
         </View>
-    )
-}
+      </View>
+
+      <Pressable
+        onPress={() => router.navigate("/(user)/account/info")}
+        style={{
+          flexDirection: "row",
+          paddingVertical: 15,
+          gap: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: "#eee",
+          justifyContent: "space-between",
+          paddingHorizontal: 10,
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+          }}
+        >
+          <MaterialIcons name="manage-accounts" size={24} color="green" />
+          <Text>Cập nhật thông tin</Text>
+        </View>
+        <MaterialIcons name="navigate-next" size={24} color={APP_COLOR.GREY} />
+      </Pressable>
+
+      <Pressable
+        style={{
+          flexDirection: "row",
+          paddingVertical: 15,
+          gap: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: "#eee",
+          justifyContent: "space-between",
+          paddingHorizontal: 10,
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+          }}
+        >
+          <MaterialIcons name="password" size={24} color="green" />
+          <Text>Thay đổi mật khẩu</Text>
+        </View>
+        <MaterialIcons name="navigate-next" size={24} color={APP_COLOR.GREY} />
+      </Pressable>
+
+      <Pressable
+        style={{
+          flexDirection: "row",
+          paddingVertical: 15,
+          gap: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: "#eee",
+          justifyContent: "space-between",
+          paddingHorizontal: 10,
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+          }}
+        >
+          <MaterialIcons name="language" size={24} color="green" />
+          <Text>Ngôn ngữ</Text>
+        </View>
+        <MaterialIcons name="navigate-next" size={24} color={APP_COLOR.GREY} />
+      </Pressable>
+
+      <Pressable
+        style={{
+          flexDirection: "row",
+          paddingVertical: 15,
+          gap: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: "#eee",
+          justifyContent: "space-between",
+          paddingHorizontal: 10,
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+          }}
+        >
+          <MaterialIcons name="info-outline" size={24} color="green" />
+          <Text>Ngôn ngữ</Text>
+        </View>
+        <MaterialIcons name="navigate-next" size={24} color={APP_COLOR.GREY} />
+      </Pressable>
+
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "flex-end",
+          paddingBottom: 15,
+          gap: 10,
+        }}
+      >
+        <Pressable
+          style={({ pressed }) => ({
+            opacity: pressed === true ? 0.5 : 1,
+            padding: 10,
+            marginHorizontal: 10,
+            backgroundColor: APP_COLOR.ORANGE,
+            borderRadius: 3,
+          })}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+            }}
+          >
+            Đăng xuất
+          </Text>
+        </Pressable>
+
+        <Text
+          style={{
+            textAlign: "center",
+            color: APP_COLOR.GREY,
+          }}
+        >
+          Version 1.0 - @DiAyTi
+        </Text>
+      </View>
+    </View>
+  );
+};
 
 export default AccountPage;
