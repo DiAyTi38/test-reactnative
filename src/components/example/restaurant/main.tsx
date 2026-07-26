@@ -8,7 +8,6 @@ import {
   Dimensions,
   SectionList,
   ViewToken,
-  ScrollView,
 } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -162,7 +161,7 @@ const RMain = () => {
 
   console.log(processDataRestaurantMenu(restaurant));
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <StickyHeader
         headerHeight={HEADER_HEIGHT}
         imageHeight={IMAGE_HEIGHT}

@@ -46,12 +46,9 @@ const RootLayout = () => {
           <ThemeProvider value={navTheme}>
             <Stack
               screenOptions={{
-                headerStyle: {
-                  backgroundColor: APP_COLOR.ORANGE,
-                },
-                headerTintColor: "#fff",
+                headerTintColor: APP_COLOR.ORANGE,
                 headerTitleStyle: {
-                  fontWeight: "bold",
+                  color: "black",
                 },
               }}
             >
@@ -89,6 +86,13 @@ const RootLayout = () => {
                   headerShown: false,
                   animation: "fade",
                   presentation: "transparentModal",
+                }}
+              />
+
+              <Stack.Screen
+                name="product/place.order"
+                options={{
+                  headerTitle: "Xác nhận đơn hàng",
                 }}
               />
 
