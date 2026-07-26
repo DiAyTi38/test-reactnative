@@ -100,8 +100,13 @@ export const currencyFormatter = (value: any) => {
 };
 
 export const placeOrderAPI = (data: any) => {
-  const url = `/api/v1/orders `;
-  return axios.post<IBackendRes<IUserLogin>>(url, {
+  const url = `/api/v1/orders`;
+  return axios.post<IBackendRes<any>>(url, {
     ...data,
   });
+};
+
+export const getOrderHistoryAPI = () => {
+  const url = `/api/v1/orders`;
+  return axios.get<IBackendRes<any>>(url);
 };
