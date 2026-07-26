@@ -2,6 +2,7 @@ import { useCurrentApp } from "@/context/app.context";
 import { getURLBaseBackend } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import {
+  Alert,
   Image,
   Platform,
   Pressable,
@@ -12,11 +13,25 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AccountPage = () => {
   const insets = useSafeAreaInsets();
   const { appState } = useCurrentApp();
   const baseImage = `${getURLBaseBackend()}/images/avatar`;
+
+  const handleLogout = () => {
+    Alert.alert("Đăng xuất", "Xác nhận đăng xuất người dùng?", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "OK",
+        onPress: async () => {
+          await AsyncStorage.removeItem("access-token");
+          router.replace("/(auth)/welcome");
+        },
+      },
+    ]);
+  };
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -151,6 +166,7 @@ const AccountPage = () => {
         }}
       >
         <Pressable
+          onPress={handleLogout}
           style={({ pressed }) => ({
             opacity: pressed === true ? 0.5 : 1,
             padding: 10,
