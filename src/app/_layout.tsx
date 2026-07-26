@@ -84,6 +84,15 @@ const RootLayout = () => {
               />
 
               <Stack.Screen
+                name="product/update.modal"
+                options={{
+                  headerShown: false,
+                  animation: "fade",
+                  presentation: "transparentModal",
+                }}
+              />
+
+              <Stack.Screen
                 name="(auth)/welcome"
                 options={{ headerShown: false }}
               />

@@ -49,6 +49,7 @@ const CreateModalPage = () => {
       const item = menuItem!;
 
       const option = menuItem.options[selectedIndex];
+      const keyOption = `${option.title}-${option.description}`;
       if (!cart[restaurant?._id]) {
         //chưa tồn tại cửa hàng => khởi tạo cửa hàng
         cart[restaurant._id] = {
@@ -69,14 +70,40 @@ const CreateModalPage = () => {
         cart[restaurant._id].items[item._id] = {
           data: menuItem,
           quantity: 0,
+          extra: {
+            [keyOption]: 0,
+          },
         };
+      }
+
+      // check options đã từng thêm vào chưa
+      if (cart[restaurant._id].items[item._id]) {
+        const extra = cart[restaurant._id].items[item._id].extra;
+        if (extra && !extra[keyOption]) {
+          cart[restaurant._id].items[item._id] = {
+            ...cart[restaurant._id].items[item._id],
+            extra: {
+              ...cart[restaurant._id].items[item._id].extra,
+              [keyOption]: 0,
+            },
+          };
+        }
       }
 
       const currentQuantity =
         cart[restaurant._id].items[item._id].quantity + total;
+      const i = cart[restaurant._id].items[item._id];
+      let currentExtraQuantity = 0;
+      if (i.extra && i.extra?.[keyOption] !== null)
+        currentExtraQuantity = i.extra[keyOption] + total;
+
       cart[restaurant._id].items[item._id] = {
         data: menuItem,
         quantity: currentQuantity,
+        extra: {
+          ...cart[restaurant._id].items[item._id].extra,
+          [keyOption]: currentExtraQuantity,
+        },
       };
 
       if (currentQuantity <= 0) {
