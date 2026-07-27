@@ -26,6 +26,12 @@ declare global {
     access_token: string;
   }
 
+  interface IUpdateUser {
+    _id: string;
+    name: string;
+    phone: string;
+  }
+
   interface ITopRestaurant {
     _id: string;
     name: string;

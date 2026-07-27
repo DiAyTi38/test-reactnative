@@ -1,14 +1,20 @@
 import ShareInput from "@/components/input/share.input";
 import { useCurrentApp } from "@/context/app.context";
+import { updateUserAPI } from "@/utils/api";
+import { APP_COLOR } from "@/utils/constant";
+import { UpdateUserSchema } from "@/utils/validate.schema";
+import { Formik } from "formik";
 import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Toast from "react-native-root-toast";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,8 +23,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const UserInfo = () => {
-  const { theme, appState } = useCurrentApp();
+const UserInfo = (props: IUpdateUser) => {
+  const { theme, appState, setAppState } = useCurrentApp();
 
   const backend =
     Platform.OS === "android"
@@ -26,6 +32,35 @@ const UserInfo = () => {
       : process.env.EXPO_PUBLIC_IOS_API_URL;
 
   const baseImage = `${backend}/images/avatar`;
+  const handleUpdateUser = async (name: string, phone: string) => {
+    if (appState?.user._id) {
+      const res = await updateUserAPI(appState?.user._id, name, phone);
+      if (res.data) {
+        Toast.show("Cập nhật thông tin user thành công!", {
+          duration: Toast.durations.LONG,
+          textColor: "white",
+          backgroundColor: APP_COLOR.ORANGE,
+          opacity: 1,
+        });
+        setAppState({
+          ...appState,
+          user: {
+            ...appState.user,
+            name: name,
+            phone: phone,
+          },
+        });
+      } else {
+        const m = Array.isArray(res.message) ? res.message[0] : res.message;
+        Toast.show(m, {
+          duration: Toast.durations.LONG,
+          textColor: "white",
+          backgroundColor: APP_COLOR.ORANGE,
+          opacity: 1,
+        });
+      }
+    }
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -40,18 +75,77 @@ const UserInfo = () => {
             />
             <Text>{appState?.user.name}</Text>
           </View>
+          <Formik
+            validationSchema={UpdateUserSchema}
+            initialValues={{
+              name: appState?.user.name,
+              email: appState?.user.email,
+              phone: appState?.user.phone,
+            }}
+            onSubmit={(values) =>
+              handleUpdateUser(values?.name ?? "", values?.phone ?? "")
+            }
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              isValid,
+              dirty,
+            }) => (
+              <View style={{ marginTop: 20, gap: 20 }}>
+                <ShareInput
+                  title="Họ tên"
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                  errors={errors.name}
+                  touched={touched.name}
+                />
 
-          <View style={{ marginTop: 20, gap: 20 }}>
-            <ShareInput title="Họ tên" value={appState?.user.name} />
+                <ShareInput
+                  editable={false}
+                  title="Email"
+                  keyboardType="email-address"
+                  value={appState?.user.email}
+                />
 
-            <ShareInput
-              title="Email"
-              keyboardType="email-address"
-              value={appState?.user.email}
-            />
+                <ShareInput
+                  title="Số điện thoại"
+                  onChangeText={handleChange("phone")}
+                  onBlur={handleBlur("phone")}
+                  value={values.phone}
+                  errors={errors.phone}
+                  touched={touched.phone}
+                />
 
-            <ShareInput title="Số điện thoại" value={appState?.user.phone} />
-          </View>
+                <Pressable
+                  disabled={!(isValid && dirty)}
+                  onPress={handleSubmit as any}
+                  style={({ pressed }) => ({
+                    opacity: pressed === true ? 0.5 : 1,
+                    backgroundColor:
+                      isValid && dirty ? APP_COLOR.ORANGE : APP_COLOR.GREY,
+                    padding: 10,
+                    marginTop: 10,
+                    borderRadius: 3,
+                  })}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: isValid && dirty ? "white" : "grey",
+                    }}
+                  >
+                    Lưu thay đổi
+                  </Text>
+                </Pressable>
+              </View>
+            )}
+          </Formik>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

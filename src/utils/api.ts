@@ -15,6 +15,15 @@ export const loginAPI = (email: string, password: string) => {
   });
 };
 
+export const updateUserAPI = (_id: string, name: string, phone: string) => {
+  const url = `/api/v1/users `;
+  return axios.patch<IBackendRes<IUpdateUser>>(url, {
+    _id,
+    name,
+    phone,
+  });
+};
+
 export const getAccountAPI = () => {
   const url = `/api/v1/auth/account `;
   return axios.get<IBackendRes<IUserLogin>>(url);
