@@ -71,7 +71,7 @@ const ForgotPasswordPage = () => {
               <Text
                 style={{
                   fontSize: 25,
-                  fontWeight: "600",
+                  fontWeight: "bold",
                   marginVertical: 30,
                 }}
               >

@@ -12,14 +12,7 @@ import Toast from "react-native-root-toast";
 const ResquestPasswordPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      gap: 10,
-      paddingHorizontal: 20,
-      paddingVertical: 50,
-    },
-  });
+
 
   const handleRequestPassword = async (email: string) => {
     try {
@@ -63,14 +56,14 @@ const ResquestPasswordPage = () => {
             <Text
               style={{
                 fontSize: 25,
-                fontWeight: 600,
+                fontWeight: "600",
                 marginTop: 30,
               }}
             >
               Quên mật khẩu
             </Text>
           </View>
-          <Text style={{ color: "grey" }}>
+          <Text>
             Vui lòng điền vào email tài khoản đăng nhập của bạn để thực hiện yêu
             cầu thay đổi mật khẩu
           </Text>
@@ -90,7 +83,7 @@ const ResquestPasswordPage = () => {
           <ShareButton
             loading={loading}
             title="Xác nhận"
-            onPress={handleSubmit as any}
+            onPress={() => handleSubmit()}
             textStyle={{
               textTransform: "uppercase",
               color: "#fff",
@@ -110,5 +103,15 @@ const ResquestPasswordPage = () => {
     </Formik>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 50,
+  },
+});
 
 export default ResquestPasswordPage;

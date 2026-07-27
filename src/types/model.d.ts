@@ -58,6 +58,7 @@ declare global {
     updatedAt: Date;
 
     menu: IMenu[];
+    isLike: boolean;
   }
 
   interface IMenu {

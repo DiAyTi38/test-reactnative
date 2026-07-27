@@ -3,12 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
 export const registerAPI = (email: string, password: string, name: string) => {
-  const url = `/api/v1/auth/register `;
+  const url = `/api/v1/auth/register`;
   return axios.post<IBackendRes<IRegister>>(url, { email, password, name });
 };
 
 export const loginAPI = (email: string, password: string) => {
-  const url = `/api/v1/auth/login `;
+  const url = `/api/v1/auth/login`;
   return axios.post<IBackendRes<IUserLogin>>(url, {
     username: email,
     password,
@@ -16,7 +16,7 @@ export const loginAPI = (email: string, password: string) => {
 };
 
 export const updateUserAPI = (_id: string, name: string, phone: string) => {
-  const url = `/api/v1/users `;
+  const url = `/api/v1/users`;
   return axios.patch<IBackendRes<IUpdateUser>>(url, {
     _id,
     name,
@@ -28,7 +28,7 @@ export const updateUserPasswordAPI = (
   currentPassword: string,
   newPassword: string,
 ) => {
-  const url = `/api/v1/users/password `;
+  const url = `/api/v1/users/password`;
   return axios.post<IBackendRes<IUserLogin>>(url, {
     currentPassword,
     newPassword,
@@ -36,7 +36,7 @@ export const updateUserPasswordAPI = (
 };
 
 export const getAccountAPI = () => {
-  const url = `/api/v1/auth/account `;
+  const url = `/api/v1/auth/account`;
   return axios.get<IBackendRes<IUserLogin>>(url);
 };
 export const requestPasswordAPI = (email: string) => {
@@ -78,6 +78,19 @@ export const getRestaurantByIdAPI = (id: string) => {
   return axios.get<IBackendRes<IRestaurant>>(url, {
     headers: { delay: 3000 },
   });
+};
+
+export const likeRestaurantAPI = (restaurant: string, quantity: number) => {
+  const url = `/api/v1/likes`;
+  return axios.post<IBackendRes<IUserLogin>>(url, {
+    restaurant,
+    quantity,
+  });
+};
+
+export const getFavoriteRestaurantAPI = () => {
+  const url = `/api/v1/likes?current=1&pageSize=10`;
+  return axios.get<IBackendRes<IRestaurant[]>>(url);
 };
 
 export const getURLBaseBackend = () => {
