@@ -8,8 +8,8 @@ import {
   TextInput,
   Pressable,
   ScrollView,
+  FlatList,
 } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { APP_COLOR } from "@/utils/constant";

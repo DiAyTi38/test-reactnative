@@ -98,6 +98,11 @@ export const getRestaurantByName = (name: string) => {
   return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
 };
 
+export const filterRestaurantAPI = (query: string) => {
+  const url = `/api/v1/restaurants?${query}`;
+  return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
+};
+
 export const getURLBaseBackend = () => {
   const backend =
     Platform.OS === "android"

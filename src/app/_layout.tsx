@@ -39,7 +39,7 @@ const RootLayout = () => {
     },
   };
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <RootSiblingParent>
         <AppProvider>
           {/* <SafeAreaView style={{flex: 1}}> */}
@@ -127,6 +127,19 @@ const RootLayout = () => {
               <Stack.Screen
                 name="(auth)/welcome"
                 options={{ headerShown: false }}
+              />
+
+              <Stack.Screen
+                name="(auth)/restaurants"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="(auth)/popup.sale"
+                options={{
+                  headerShown: false,
+                  animation: "fade",
+                  presentation: "transparentModal",
+                }}
               />
 
               <Stack.Screen
