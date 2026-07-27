@@ -39,6 +39,18 @@ export const getAccountAPI = () => {
   const url = `/api/v1/auth/account `;
   return axios.get<IBackendRes<IUserLogin>>(url);
 };
+export const requestPasswordAPI = (email: string) => {
+  const url = `/api/v1/auth/retry-password`;
+  return axios.post<IBackendRes<IUserLogin>>(url, { email });
+};
+export const forgotPasswordAPI = (
+  code: string,
+  email: string,
+  password: string,
+) => {
+  const url = `/api/v1/auth/forgot-password`;
+  return axios.post<IBackendRes<IUserLogin>>(url, { code, email, password });
+};
 
 export const verifyCodeAPI = (email: string, code: string) => {
   const url = `/api/v1/auth/verify-code`;
