@@ -130,6 +130,11 @@ const RootLayout = () => {
               />
 
               <Stack.Screen
+                name="(auth)/search"
+                options={{ headerShown: false }}
+              />
+
+              <Stack.Screen
                 name="(auth)/login"
                 options={{
                   headerTitle: "Đăng nhập",

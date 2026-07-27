@@ -93,6 +93,11 @@ export const getFavoriteRestaurantAPI = () => {
   return axios.get<IBackendRes<IRestaurant[]>>(url);
 };
 
+export const getRestaurantByName = (name: string) => {
+  const url = `/api/v1/restaurants?current=1&pageSize=10&name=/${name}/i`;
+  return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
+};
+
 export const getURLBaseBackend = () => {
   const backend =
     Platform.OS === "android"

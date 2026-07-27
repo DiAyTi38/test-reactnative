@@ -70,6 +70,16 @@ declare global {
     menuItem: IMenuItem[];
   }
 
+  interface IModelPaginate<T> {
+    meta: {
+      current: number;
+      pageSize: number;
+      pages: number;
+      total: number;
+    };
+    results: T[];
+  }
+
   interface IMenuItem {
     _id: string;
     menu: string;

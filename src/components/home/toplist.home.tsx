@@ -112,7 +112,12 @@ const TopListHome = () => {
                     width: 35,
                   }}
                 />
-                <Text style={{ textAlign: "center", fontFamily: APP_FONT }}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    // fontFamily: APP_FONT
+                  }}
+                >
                   {item.name}
                 </Text>
               </View>
