@@ -104,6 +104,13 @@ const RootLayout = () => {
               />
 
               <Stack.Screen
+                name="(user)/account/password"
+                options={{
+                  headerTitle: "Cập nhật mật khẩu",
+                }}
+              />
+
+              <Stack.Screen
                 name="(auth)/welcome"
                 options={{ headerShown: false }}
               />

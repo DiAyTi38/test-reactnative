@@ -24,6 +24,17 @@ export const updateUserAPI = (_id: string, name: string, phone: string) => {
   });
 };
 
+export const updateUserPasswordAPI = (
+  currentPassword: string,
+  newPassword: string,
+) => {
+  const url = `/api/v1/users/password `;
+  return axios.post<IBackendRes<IUserLogin>>(url, {
+    currentPassword,
+    newPassword,
+  });
+};
+
 export const getAccountAPI = () => {
   const url = `/api/v1/auth/account `;
   return axios.get<IBackendRes<IUserLogin>>(url);

@@ -83,6 +83,7 @@ const AccountPage = () => {
       </Pressable>
 
       <Pressable
+        onPress={() => router.navigate("/(user)/account/password")}
         style={{
           flexDirection: "row",
           paddingVertical: 15,
